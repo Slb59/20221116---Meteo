@@ -8,4 +8,5 @@ Geopy<br>
 timezonefinder<br>
 pytz<br>
 tKinter<br>
-requests
+requests<br>
+PIL

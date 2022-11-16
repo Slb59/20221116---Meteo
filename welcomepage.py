@@ -5,6 +5,7 @@ from datetime import datetime
 import requests
 import pytz
 from tkinter import *
+from PIL import ImageTk, Image
 
 import tkinter as tk
 
@@ -17,7 +18,10 @@ class WelcomePage(tk.Frame):
         self.controller = controller
         self.id = controller.id
 
-        recherche_image = PhotoImage('D:/coffre_1/Sylvie/Python/20221116---Meteo/Images/recherche.jfif')
-        myimage = Label(image=recherche_image)
-        myimage.place(x=20, y=20)
+        recherche_image = ImageTk.PhotoImage(Image.open('Images/recherche.jpg'))
+        ril = tk.Label(master=self)
+        ril.image = recherche_image
+        ril.configure(image=recherche_image)
+        ril.grid(row=0, column=0, pady=30)
+
 
