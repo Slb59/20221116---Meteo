@@ -71,53 +71,53 @@ class WelcomePage(tk.Frame):
 
         label2 = tk.Label(master=self, text='HUMIDITE', font=('Helvetica', 15, 'bold'),
                           fg='white', bg='#1ab5ef')
-        label2.place(x=200, y=365)
+        label2.place(x=150, y=365)
 
         label3 = tk.Label(master=self, text='DESCRIPTION', font=('Helvetica', 15, 'bold'),
                           fg='white', bg='#1ab5ef')
-        label3.place(x=350, y=365)
+        label3.place(x=270, y=365)
 
         label4 = tk.Label(master=self, text='PRESSION', font=('Helvetica', 15, 'bold'),
                           fg='white', bg='#1ab5ef')
-        label4.place(x=560, y=365)
+        label4.place(x=600, y=365)
 
-        t = tk.Label(master=self,
+        self.t = tk.Label(master=self,
                      font=('arial', 50, "bold"),
                      bg='#ee666d')
-        t.grid(row=2, column=1, pady=5)
+        self.t.grid(row=2, column=1, pady=5)
 
-        c = tk.Label(master=self,
+        self.c = tk.Label(master=self,
                      font=('arial', 15, "bold"),
                      bg='#ee666d'
                      )
-        c.grid(row=3, column=1, pady=5)
+        self.c.grid(row=3, column=1, pady=5)
 
-        v = tk.Label(master=self,
+        self.v = tk.Label(master=self,
                      text='...',
                      font=('arial', 20, 'bold'),
                      bg='#1ab5ef')
-        v.place(x=70, y=430)
+        self.v.place(x=70, y=430)
 
-        h = tk.Label(master=self,
+        self.h = tk.Label(master=self,
                      text='...',
                      font=('arial', 20, 'bold'),
                      bg='#1ab5ef')
-        h.place(x=200, y=430)
+        self.h.place(x=150, y=430)
 
-        d = tk.Label(master=self,
+        self.d = tk.Label(master=self,
                      text='...',
                      font=('arial', 20, 'bold'),
                      bg='#1ab5ef')
-        d.place(x=350, y=430)
+        self.d.place(x=270, y=430)
 
-        p = tk.Label(master=self,
+        self.p = tk.Label(master=self,
                      text='...',
                      font=('arial', 20, 'bold'),
                      bg='#1ab5ef')
-        p.place(x=560, y=430)
+        self.p.place(x=600, y=430)
 
-        heure = tk.Label(master=self, font=('Helvetica', 20), text='heure')
-        heure.grid(row=3, column=0)
+        self.heure = tk.Label(master=self, font=('Helvetica', 20), text='heure')
+        self.heure.grid(row=3, column=0)
 
     def meteo_data(self):
         try:
@@ -129,8 +129,26 @@ class WelcomePage(tk.Frame):
 
             home = pytz.timezone(resultat)
             locat_time = datetime.now(home)
-            heure_actuel = locat_time.strftime("%H%M%S")
+            heure_actuel = locat_time.strftime("%H:%M:%S")
+            self.heure.config(text=heure_actuel)
             self.nomville.config(text='Météo actuelle')
+
+            apicle  = "96e5845ca3da53f5a1f19e2b3a15157f"
+
+            api = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+apicle+"&lang=fr"
+
+            json_data = requests.get(api).json()
+            description = json_data["weather"][0]["description"]
+            temp = int(json_data["main"]["temp"]-273.15)
+            pression = json_data["main"]["pressure"]
+            humidity = json_data["main"]["humidity"]
+            vent = json_data["wind"]["speed"]
+
+            self.t.config(text=(temp, "°"))
+            self.v.config(text=vent)
+            self.h.config(text=humidity)
+            self.d.config(text=description)
+            self.p.config(text=pression)
 
         except Exception as e:
             messagebox.showerror("Application météo", "Invalide")
