@@ -41,8 +41,16 @@ class WelcomePage(tk.Frame):
         recherche_button.configure(image=self.loop_image)
         recherche_button.place(x=390, y=52)
 
-        self.logo_image = ImageTk.PhotoImage(Image.open('Images/Soleil.webp'))
+        image = Image.open('Images/Soleil.jpg')
+        image = image.resize((189, 170))
+        self.logo_image = ImageTk.PhotoImage(image)
 
+        logofield = tk.Label(master=self, border=0)
+        logofield.image = self.logo_image
+        logofield.configure(image=self.logo_image)
+        logofield.grid(row=1, column=0)
+
+        fondImg = Image.open('Images/fond.jpg')
 
     def search_command(self):
         pass
