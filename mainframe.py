@@ -24,6 +24,7 @@ class MainFrame(tk.Tk):
         page_name = WelcomePage.__name__
         frame = WelcomePage(parent=container, controller=self)
         frame.grid(row=0, column=0, sticky='nesw')
+        #frame.place(x=0, y=0)
         self.listening[page_name] = frame
 
         self.up_frame('WelcomePage')
