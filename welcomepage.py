@@ -60,25 +60,29 @@ class WelcomePage(tk.Frame):
         fondfield = tk.Label(master=self, border=0)
         fondfield.image = self.fond_image
         fondfield.configure(image=self.fond_image)
-        fondfield.grid(row=2, columnspan=2, pady=50)
+        fondfield.grid(row=3, columnspan=2, pady=20)
 
         label1 = tk.Label(master=self, text='VENT', font=('Helvetica', 15, 'bold'),
                           fg='white', bg='#1ab5ef')
-        label1.place(x=70, y=270)
+        label1.place(x=70, y=320)
 
         label2 = tk.Label(master=self, text='HUMIDITE', font=('Helvetica', 15, 'bold'),
                           fg='white', bg='#1ab5ef')
-        label2.place(x=200, y=270)
+        label2.place(x=200, y=320)
 
         label3 = tk.Label(master=self, text='DESCRIPTION', font=('Helvetica', 15, 'bold'),
                           fg='white', bg='#1ab5ef')
-        label3.place(x=350, y=270)
+        label3.place(x=350, y=320)
 
         label4 = tk.Label(master=self, text='PRESSION', font=('Helvetica', 15, 'bold'),
                           fg='white', bg='#1ab5ef')
-        label4.place(x=560, y=270)
+        label4.place(x=560, y=320)
 
-
+        t = tk.Label(master=self,
+                     font=('arial', 50, "bold"),
+                     bg='#ee666d',
+                     text='coucou')
+        t.grid(row=2, column=1)
 
 
     def search_command(self):
