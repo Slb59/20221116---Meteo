@@ -30,16 +30,19 @@ class WelcomePage(tk.Frame):
         ril.configure(image=self.recherche_image)
         ril.grid(row=0, column=1, pady=30)
 
-        textfield = tk.Entry(self, justify="center", width=17, font=("poppins", 25, "bold"),
+        self.nomville = tk.Label(master=self, font=('arial', 15, 'bold'), text='nom')
+        self.nomville.grid(row=2, column=0)
+
+        self.textfield = tk.Entry(self, justify="center", width=17, font=("poppins", 25, "bold"),
                              bg = "white", border=0, fg="black")
-        textfield.grid(row=0, column=1)
-        textfield.focus()
+        self.textfield.grid(row=0, column=1)
+        self.textfield.insert(END, 'Paris')
+        self.textfield.focus()
 
         self.loop_image = ImageTk.PhotoImage(Image.open('Images/loop.png'))
-        recherche_button = tk.Button(self,
-                                     image=self.loop_image,
+        recherche_button = tk.Button(master=self,
                                      cursor="hand2",
-                                     command=self.search_command(),
+                                     command=lambda: self.meteo_data(),
                                      border=0)
         recherche_button.configure(image=self.loop_image)
         recherche_button.place(x=720, y=52)
@@ -113,8 +116,24 @@ class WelcomePage(tk.Frame):
                      bg='#1ab5ef')
         p.place(x=560, y=430)
 
+        heure = tk.Label(master=self, font=('Helvetica', 20), text='heure')
+        heure.grid(row=3, column=0)
 
-    def search_command(self):
-        pass
+    def meteo_data(self):
+        try:
+            city = self.textfield.get()
+            geolocalisation = Nominatim(user_agent="geoapiExercices")
+            location = geolocalisation.geocode(city)
+            obj = TimezoneFinder()
+            resultat = obj.timezone_at(lng=location.longitude, lat=location.latitude)
+
+            home = pytz.timezone(resultat)
+            locat_time = datetime.now(home)
+            heure_actuel = locat_time.strftime("%H%M%S")
+            self.nomville.config(text='Météo actuelle')
+
+        except Exception as e:
+            messagebox.showerror("Application météo", "Invalide")
+            print(e)
 
 
