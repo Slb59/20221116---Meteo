@@ -2,6 +2,7 @@ import tkinter as tk
 
 from tkinter import font as tkfont
 from welcomepage import WelcomePage
+from citypage import CityPage
 
 class MainFrame(tk.Tk):
 
@@ -21,10 +22,11 @@ class MainFrame(tk.Tk):
 
         self.listening = {}
 
-        page_name = WelcomePage.__name__
-        frame = WelcomePage(parent=container, controller=self)
-        frame.grid(row=0, column=0, sticky='nesw')
-        self.listening[page_name] = frame
+        for p in {WelcomePage, CityPage}:
+            page_name = p.__name__
+            frame = p(parent=container, controller=self, param='')
+            frame.grid(row=0, column=0, sticky='nesw')
+            self.listening[page_name] = frame
 
         self.up_frame('WelcomePage')
 
