@@ -2,7 +2,7 @@ from tkinter import ttk, messagebox
 from tkinter import *
 from PIL import ImageTk, Image
 
-from meteodata import MeteoData
+from functools import partial
 
 import tkinter as tk
 
@@ -20,6 +20,17 @@ class CityPage(tk.Frame):
         self.create_widget()
 
     def create_widget(self):
+
+        go_back = tk.Button(master=self,
+                             cursor="hand2",
+                             command=partial(self.controller.up_frame, 'WelcomePage'),
+                             border=1,
+                             text='Retour',
+                             font= ('Helvetica 15 bold'),
+                             compound=CENTER)
+        go_back.grid(row=1, column=0)
+
+    def create_widget_old(self):
 
         rechImg = Image.open('Images/recherche.jpg')
         rechImg = rechImg.resize((550, 102))
@@ -118,11 +129,11 @@ class CityPage(tk.Frame):
         self.heure = tk.Label(master=self, font=('Helvetica', 20), text='heure')
         self.heure.grid(row=3, column=0)
 
+
+
     def meteo_data(self):
         try:
-            city = self.textfield.get()
-
-            meteodata = MeteoData(city)
+            meteodata = self.controller.citiesdata[self.controller.current_city]
 
             self.heure.config(text=meteodata.actual_time)
             self.nomville.config(text='Météo actuelle')
