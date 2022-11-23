@@ -8,13 +8,14 @@ import tkinter as tk
 
 class CityPage(tk.Frame):
 
-    def __init__(self, parent, controller, param):
+    def __init__(self, parent, controller):
 
         tk.Frame.__init__(self, parent)
 
         self.controller = controller
         self.id = controller.id
-        self.cityname = 'Paris'
+
+        self.cityname = controller.current_city
 
         self.create_widget()
 
@@ -56,7 +57,6 @@ class CityPage(tk.Frame):
         logofield.grid(row=0, column=0, sticky='w')
 
         fondImg = Image.open('Images/fond.jpg')
-        print(fondImg.size)
         fondImg = fondImg.resize((850,200))
         self.fond_image = ImageTk.PhotoImage(fondImg)
         fondfield = tk.Label(master=self, border=0)
